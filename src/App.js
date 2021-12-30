@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
+import {apiKey} from "./utils/googleTranslate"
 
+console.log(apiKey)
 function App() {
+  const [translatedText, setTranslatedText] = useState("No input given")
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // console.log(e.target.input.value)
+    setTranslatedText(e.target.input.value)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Line Translation</h1>
+      <form onSubmit={handleSubmit}>
+        <label> Input 
+          <input type="text" name="input"></input>
+        </label>
+        <button  type="submit">Translate</button>
+      </form>
+      <p>Translated text</p>
+      <p>{translatedText}</p>
     </div>
   );
 }
