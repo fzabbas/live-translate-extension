@@ -1,10 +1,18 @@
 {
   "short_name": "Extensions",
   "name": "Extensions - Translate",
+  "permissions": [
+    "<all_urls>",
+    "scripting",
+    "tabs",
+    "storage", 
+    "declarativeContent", 
+    "activeTab"
+  ],
   "description": "Base Level Extension",
   "version": "1.0",
-  "manifest_version": 2,
-  "browser_action": {
+  "manifest_version": 3,
+  "action": {
     "default_popup": "index.html",
     "default_title": "Open the popup"
   },
@@ -13,5 +21,4 @@
     "48": "logo192.png",
     "128": "logo192.png"
   }
-  
 }
