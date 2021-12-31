@@ -4,10 +4,14 @@ import React, { useState } from 'react';
 import {apiKey} from "./utils/googleTranslate";
 import axios from "axios";
 import LANGUAGES from "./data/languages.json";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import toggleOn from "./assets/icons/toggle-on-solid.svg";
+import toggleOff from "./assets/icons/toggle-off-solid.svg";
 
 // `https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=text&source=EN&target=FR`
 
 function App() {
+  const [darkModeOn, setDarkModeOn] = useState(false);
   const [translatedFrom, setTranslatedFrom] = useState("")
   const [translatedText, setTranslatedText] = useState("Highlight or enter text to translate!")
   const defaultLanguage = navigator.language.split('-')[0]
@@ -46,6 +50,10 @@ function App() {
     })
   }
   
+  const handleCheck = (e) => {
+    console.log (e.target)
+    setDarkModeOn(!darkModeOn)
+  }
   
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -63,26 +71,34 @@ function App() {
   
 
   return (
-    <div className="extension">
+    <div className={"extension" + (darkModeOn ? " extension--darkmode" : "")}>
+      <label htmlFor="checkbox" className="darkmode">
+        <input type="checkbox" onChange={handleCheck} className="darkmode__button off" id="checkbox" />
+        <span className="darkmode__slider"></span>
+      </label>
       <h1 className="extension__heading">Line Translation</h1>
       <form className="extension__form" onSubmit={handleSubmit}>
         <label className="extension__label"> Input 
-          <input className="extension__input" type="text" name="input"></input>
+          <textarea className={"extension__input" + (darkModeOn ? " extension__input--darkmode" : "")} name="input"></textarea>
         </label>
-        <select className="extension__dropdown" name="targetLanguage">
-          {LANGUAGES.languages.map((language) => (
-            <option className="extension__option" 
-              value={language.language}
-              selected={language.language === defaultLanguage ? "selected" : ""}
-            >
-              {language.language.toUpperCase()}
-            </option>
-          ))}
-        </select>
-        <button className="extension__button"  type="submit">Translate</button>
+        <div className="extension__container">
+          <label htmlFor="targetLanguage">Translate to:</label>
+            <select className={"extension__dropdown" + (darkModeOn ? " extension__dropdown--darkmode" : "")} name="targetLanguage" id="targetLanguage">
+              {LANGUAGES.languages.map((language) => (
+                <option className="extension__option" 
+                value={language.language}
+                selected={language.language === defaultLanguage ? "selected" : ""}
+                >
+                  {language.language.toUpperCase()}
+                  {language.language === defaultLanguage ? " (default)" : ""}
+                </option>
+              ))}
+            </select>
+        </div>
+        <button className={"extension__button" + (darkModeOn ? " extension__button--darkmode" : "")} type="submit">Translate</button>
       </form>
-      <p className="extension__copy">{translatedText}</p>
-      <p className="extension__copy">{translatedFrom}</p>
+      <p className="extension__translation">{translatedText}</p>
+      <p className={"extension__from" + + (darkModeOn ? " extension__from--darkmode" : "")}>{translatedFrom}</p>
     </div>
   );
 }

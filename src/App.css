@@ -1,0 +1,57 @@
+.darkmode__button {
+  padding: 1rem;
+  width: 25px;
+}
+
+.on {
+  background-image: "./assets/icons/toggle-on-solid.svg";
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.off {
+  background-image: "./assets/icons/toggle-off-solid.svg";
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.extension__heading {
+  font-size: 1.25rem;
+  margin: 0.5rem 0 1rem;
+}
+.extension__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.extension__container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.extension__input {
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  resize: none;
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+.extension__dropdown {
+  border-radius: 0.375rem;
+}
+.extension__button {
+  width: 100%;
+  border-radius: 0.375rem;
+  padding: 0.375rem;
+  margin: 1rem 0;
+  border: none;
+  background-color: #eeeeee;
+}
+.extension__translation {
+  margin: 0;
+}
+.extension__from {
+  margin: 0.25rem;
+  text-align: center;
+  color: #555555;
+}/*# sourceMappingURL=App.css.map */
