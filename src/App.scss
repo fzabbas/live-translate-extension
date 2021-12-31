@@ -43,8 +43,6 @@
   }
 }
 
-
-
 .on {
   background: url("./assets/icons/toggle-on-solid.svg");
   object-fit: cover;
@@ -59,9 +57,11 @@
   padding: 0.5rem 1.25rem;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(45deg,#fff,#fbfbfb);
+  min-width: 250px;
 
   &--darkmode {
-    background-color: #444;
+    background: linear-gradient(220deg, #555, #444);
     color: #eee;
   }
 
@@ -80,10 +80,16 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    width: 100%
+    width: 100%;
+    padding: 0.5rem 0 0.25rem;
+  }
+
+  &__label {
+    width: 100%;
   }
 
   &__input {
+    outline: none;
     border-radius: .375rem;
     padding: 0.5rem;
     resize: none;
@@ -91,6 +97,7 @@
     margin: 0.5rem 0;
     font-family: inherit;
     color: inherit;
+    width: 100%;
     &--darkmode {
       background-color: #777;
     }
