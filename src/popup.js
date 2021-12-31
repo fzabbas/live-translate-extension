@@ -4,11 +4,6 @@ import React, { useState } from 'react';
 import {apiKey} from "./utils/googleTranslate";
 import axios from "axios";
 import LANGUAGES from "./data/languages.json";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import toggleOn from "./assets/icons/toggle-on-solid.svg";
-import toggleOff from "./assets/icons/toggle-off-solid.svg";
-
-// `https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=text&source=EN&target=FR`
 
 function App() {
   const [darkModeOn, setDarkModeOn] = useState(false);
@@ -16,13 +11,6 @@ function App() {
   const [translatedText, setTranslatedText] = useState("Highlight or enter text to translate!")
   const defaultLanguage = navigator.language.split('-')[0]
 
-  // console.log(chrome.tabs)
-  // async function getCurrentTab() {
-  //   let queryOptions = { active: true, currentWindow: true };
-  //   let [tab] = await chrome.tabs.query(queryOptions);
-  //   console.log(tab, "current tab")
-  //   return tab;
-  // }
   if (translatedText === "Highlight or enter text to translate!") {
     chrome.tabs.query({active: true, currentWindow: true}, 
     (tabs) => {
