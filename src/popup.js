@@ -1,12 +1,13 @@
 /*global chrome*/
 import './App.scss';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {apiKey} from "./utils/googleTranslate";
 import axios from "axios";
 import LANGUAGES from "./data/languages.json";
 import ToggleSwitch from './components/ToggleSwitch/ToggleSwitch';
 
 function App() {
+  const buttonRef = useRef(null);
   const [darkModeOn, setDarkModeOn] = useState(false);
   const [translatedFrom, setTranslatedFrom] = useState("")
   const [translatedText, setTranslatedText] = useState(false)
@@ -86,11 +87,30 @@ function App() {
       <h1 className="extension__heading">{defaultText[0]}</h1>
       <form className="extension__form" onSubmit={handleSubmit}>
         <label className="extension__label"> {defaultText[1]}
-          <textarea className={"extension__input" + (darkModeOn ? " extension__input--darkmode" : "")} name="input"></textarea>
+          <textarea 
+          onKeyDown={(e) => {
+            if (e.keyCode === 13) {
+              if (!e.shiftKey) {
+              e.preventDefault()
+              console.log("Hello!")
+              console.log(buttonRef)
+              buttonRef.current.click()
+              }
+              if (e.shiftKey) {
+                console.log(e)
+              }
+            }
+            
+          }}
+          className={"extension__input" + (darkModeOn ? " extension__input--darkmode" : "")} 
+          name="input"></textarea>
         </label>
         <div className="extension__container">
           <label htmlFor="targetLanguage">{defaultText[2]}</label>
-            <select className={"extension__dropdown" + (darkModeOn ? " extension__dropdown--darkmode" : "")} name="targetLanguage" id="targetLanguage">
+            <select 
+            className={"extension__dropdown" + (darkModeOn ? " extension__dropdown--darkmode" : "")} 
+            name="targetLanguage" 
+            id="targetLanguage">
               {LANGUAGES.languages.map((language) => (
                 <option className="extension__option" 
                 value={language.language}
@@ -101,7 +121,11 @@ function App() {
               ))}
             </select>
         </div>
-        <button className={"extension__button" + (darkModeOn ? " extension__button--darkmode" : "")} type="submit">{defaultText[3]}</button>
+        <button 
+        className={"extension__button" + (darkModeOn ? " extension__button--darkmode" : "")} 
+        ref={buttonRef}
+        type="submit">{defaultText[3]}
+        </button>
       </form>
       <p className="extension__translation">{translatedText || defaultText[4]}</p>
       <p className={"extension__from" + + (darkModeOn ? " extension__from--darkmode" : "")}>{translatedFrom}</p>

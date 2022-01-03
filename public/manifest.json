@@ -2,7 +2,6 @@
   "short_name": "Extensions",
   "name": "Extensions - Translate",
   "permissions": [
-    "<all_urls>",
     "scripting",
     "tabs",
     "storage", 
