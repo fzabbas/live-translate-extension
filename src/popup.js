@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import {apiKey} from "./utils/googleTranslate";
 import axios from "axios";
 import LANGUAGES from "./data/languages.json";
+import ToggleSwitch from './components/ToggleSwitch/ToggleSwitch';
 
 function App() {
   const [darkModeOn, setDarkModeOn] = useState(false);
@@ -20,12 +21,10 @@ function App() {
 
   const defaultLanguage = navigator.language.split('-')[0]
 
-  //changing default html language
+  //changing default text on extension page
   console.log(defaultLanguage)
   if (defaultLanguage !=="en") {
-    
-    console.log("before xios call")
-    axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=${defaultText}&target=${defaultLanguage}`)
+        axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=${defaultText}&target=${defaultLanguage}`)
     .then(response => {
       const translatedDefaultText = response.data.data.translations[0].translatedText.split(",")
       console.log(translatedDefaultText)
@@ -83,10 +82,7 @@ function App() {
 
   return (
     <div className={"extension" + (darkModeOn ? " extension--darkmode" : "")}>
-      <label htmlFor="checkbox" className="darkmode">
-        <input type="checkbox" onChange={handleCheck} className="darkmode__button off" id="checkbox" />
-        <span className="darkmode__slider"></span>
-      </label>
+      <ToggleSwitch handleCheck={handleCheck}/>
       <h1 className="extension__heading">{defaultText[0]}</h1>
       <form className="extension__form" onSubmit={handleSubmit}>
         <label className="extension__label"> {defaultText[1]}
@@ -101,7 +97,6 @@ function App() {
                 selected={language.language === defaultLanguage ? "selected" : ""}
                 >
                   {language.language.toUpperCase()}
-                  {/* {language.language === defaultLanguage ? " (default)" : ""} */}
                 </option>
               ))}
             </select>
