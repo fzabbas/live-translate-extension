@@ -9,7 +9,6 @@ import ToggleSwitch from './components/ToggleSwitch/ToggleSwitch';
 function App() {
   const buttonRef = useRef(null);
   const [darkModeOn, setDarkModeOn] = useState(false);
-  const [translatedFrom, setTranslatedFrom] = useState("")
   const [translatedText, setTranslatedText] = useState(false)
   const [defaultText, setDefaultText] = useState([
     "Live Translation", 
@@ -22,13 +21,10 @@ function App() {
 
   const defaultLanguage = navigator.language.split('-')[0]
 
-  //changing default text on extension page
-  console.log(defaultLanguage)
   if (defaultLanguage !=="en") {
         axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=${defaultText}&target=${defaultLanguage}`)
     .then(response => {
       const translatedDefaultText = response.data.data.translations[0].translatedText.split(",")
-      console.log(translatedDefaultText)
       setDefaultText(translatedDefaultText)
     })
   }
@@ -37,7 +33,6 @@ function App() {
   if (!translatedText) {
     chrome.tabs.query({active: true, currentWindow: true}, 
     (tabs) => {
-      console.log("Tab query!", tabs[0].id)
       chrome.scripting.executeScript(
         {
           target: {tabId: tabs[0].id},
@@ -47,22 +42,23 @@ function App() {
         },
         (injectionResults) =>
         {
-          if(!injectionResults[0].result || (translatedFrom === injectionResults[0].result)) {
+          if(!injectionResults[0].result) {
             return;
           }
-          axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=${injectionResults[0].result}&target=${defaultLanguage}`)
-          .then(resp => {
-            setTranslatedFrom("This was translated from: " + resp.data.data.translations[0].detectedSourceLanguage)
-            setTranslatedText(resp.data.data.translations[0].translatedText)
-          }
-          )
-        }
-        )
+          translateText(injectionResults[0].result, defaultLanguage)
+        })
     })
   }
   
+  const translateText = (text, targetLanguage) => {
+    axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=${text}&target=${targetLanguage}`)
+    .then(resp => {
+      setTranslatedText(resp.data.data.translations[0].translatedText)
+    }
+    )
+  }
+
   const handleCheck = (e) => {
-    console.log (e.target)
     setDarkModeOn(!darkModeOn)
   }
   
@@ -70,13 +66,16 @@ function App() {
     e.preventDefault()
     const targetLanguage = e.target.targetLanguage.value
     const userInput = e.target.input.value
-    console.log("Handle submit!")
-    axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=${userInput}&target=${targetLanguage}`)
-    .then(resp => {
-      setTranslatedFrom("This was translated from: " + resp.data.data.translations[0].detectedSourceLanguage)
-      setTranslatedText(resp.data.data.translations[0].translatedText)
+    translateText(userInput, targetLanguage)
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      if (!e.shiftKey) {
+      e.preventDefault()
+      buttonRef.current.click()
+      }
     }
-    )
   }
 
   
@@ -88,20 +87,7 @@ function App() {
       <form className="extension__form" onSubmit={handleSubmit}>
         <label className="extension__label"> {defaultText[1]}
           <textarea 
-          onKeyDown={(e) => {
-            if (e.keyCode === 13) {
-              if (!e.shiftKey) {
-              e.preventDefault()
-              console.log("Hello!")
-              console.log(buttonRef)
-              buttonRef.current.click()
-              }
-              if (e.shiftKey) {
-                console.log(e)
-              }
-            }
-            
-          }}
+          onKeyDown={handleKeyDown}
           className={"extension__input" + (darkModeOn ? " extension__input--darkmode" : "")} 
           name="input"></textarea>
         </label>
@@ -128,7 +114,6 @@ function App() {
         </button>
       </form>
       <p className="extension__translation">{translatedText || defaultText[4]}</p>
-      <p className={"extension__from" + + (darkModeOn ? " extension__from--darkmode" : "")}>{translatedFrom}</p>
     </div>
   );
 }
