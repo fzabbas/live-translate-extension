@@ -22,7 +22,7 @@ function App() {
   const defaultLanguage = navigator.language.split('-')[0]
 
   if (defaultLanguage !=="en") {
-        axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=${defaultText}&target=${defaultLanguage}`)
+        axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&format=text&q=${defaultText}&target=${defaultLanguage}`)
     .then(response => {
       const translatedDefaultText = response.data.data.translations[0].translatedText.split(",")
       setDefaultText(translatedDefaultText)
@@ -51,7 +51,7 @@ function App() {
   }
   
   const translateText = (text, targetLanguage) => {
-    axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=${text}&target=${targetLanguage}`)
+    axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&format=text&q=${text}&target=${targetLanguage}`)
     .then(resp => {
       setTranslatedText(resp.data.data.translations[0].translatedText)
     }
