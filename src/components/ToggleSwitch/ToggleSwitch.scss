@@ -1,5 +1,27 @@
+.container {
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+  width: 4.75rem;
+  justify-content: space-between;
+}
+
+.icon {
+  width: .8125rem;
+//   -webkit-mask-size: cover;
+//   mask-size: cover;
+
+//   &--sun {
+
+//   }
+
+//   &--moon {
+
+//   }
+}
+
 .darkmode {
-    align-self: flex-end;
+    // align-self: flex-end;
     position: relative;
     display: inline-block;
     width: 40px;
@@ -41,14 +63,4 @@
         border-radius: 50%;
       }
     }
-  }
-  
-  .on {
-    background: url("../../assets/icons/toggle-on-solid.svg");
-    object-fit: cover;
-  }
-  
-  .off {
-    background: url("../../assets/icons/toggle-off-solid.svg");
-    object-fit: cover;
   }
