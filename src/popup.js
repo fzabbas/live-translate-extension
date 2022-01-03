@@ -8,13 +8,36 @@ import LANGUAGES from "./data/languages.json";
 function App() {
   const [darkModeOn, setDarkModeOn] = useState(false);
   const [translatedFrom, setTranslatedFrom] = useState("")
-  const [translatedText, setTranslatedText] = useState("Highlight or enter text to translate!")
+  const [translatedText, setTranslatedText] = useState(false)
+  const [defaultText, setDefaultText] = useState([
+    "Live Translation", 
+    "Input", 
+    "Translate to:", 
+    "Translate",
+    "Highlight text or enter text to translate!"
+  ])
+
+
   const defaultLanguage = navigator.language.split('-')[0]
 
-  if (translatedText === "Highlight or enter text to translate!") {
+  //changing default html language
+  console.log(defaultLanguage)
+  if (defaultLanguage !=="en") {
+    
+    console.log("before xios call")
+    axios.get(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}&q=${defaultText}&target=${defaultLanguage}`)
+    .then(response => {
+      const translatedDefaultText = response.data.data.translations[0].translatedText.split(",")
+      console.log(translatedDefaultText)
+      setDefaultText(translatedDefaultText)
+    })
+  }
+
+
+  if (!translatedText) {
     chrome.tabs.query({active: true, currentWindow: true}, 
     (tabs) => {
-      console.log("Tab query!")
+      console.log("Tab query!", tabs[0].id)
       chrome.scripting.executeScript(
         {
           target: {tabId: tabs[0].id},
@@ -64,13 +87,13 @@ function App() {
         <input type="checkbox" onChange={handleCheck} className="darkmode__button off" id="checkbox" />
         <span className="darkmode__slider"></span>
       </label>
-      <h1 className="extension__heading">Line Translation</h1>
+      <h1 className="extension__heading">{defaultText[0]}</h1>
       <form className="extension__form" onSubmit={handleSubmit}>
-        <label className="extension__label"> Input 
+        <label className="extension__label"> {defaultText[1]}
           <textarea className={"extension__input" + (darkModeOn ? " extension__input--darkmode" : "")} name="input"></textarea>
         </label>
         <div className="extension__container">
-          <label htmlFor="targetLanguage">Translate to:</label>
+          <label htmlFor="targetLanguage">{defaultText[2]}</label>
             <select className={"extension__dropdown" + (darkModeOn ? " extension__dropdown--darkmode" : "")} name="targetLanguage" id="targetLanguage">
               {LANGUAGES.languages.map((language) => (
                 <option className="extension__option" 
@@ -78,14 +101,14 @@ function App() {
                 selected={language.language === defaultLanguage ? "selected" : ""}
                 >
                   {language.language.toUpperCase()}
-                  {language.language === defaultLanguage ? " (default)" : ""}
+                  {/* {language.language === defaultLanguage ? " (default)" : ""} */}
                 </option>
               ))}
             </select>
         </div>
-        <button className={"extension__button" + (darkModeOn ? " extension__button--darkmode" : "")} type="submit">Translate</button>
+        <button className={"extension__button" + (darkModeOn ? " extension__button--darkmode" : "")} type="submit">{defaultText[3]}</button>
       </form>
-      <p className="extension__translation">{translatedText}</p>
+      <p className="extension__translation">{translatedText || defaultText[4]}</p>
       <p className={"extension__from" + + (darkModeOn ? " extension__from--darkmode" : "")}>{translatedFrom}</p>
     </div>
   );
