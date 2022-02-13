@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+A live translation chrome extension built using Google Translate API and React.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To clone the repo in your local device:
 
-## Available Scripts
+```
+$ git clone git@github.com:fzabbas/live-translate-extension.git
+```
 
-In the project directory, you can run:
+To be able to use the Google Translate API, you will need to get an API key.
 
-### `npm start`
+> NOTE: To get an API key, sign in into [Google API Console](https://console.developers.google.com/home/).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+> Follow the [guide](https://cloud.google.com/translate/docs/setup) to get detailed instructions.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Once you have your API key, create a ```.env``` file in the local repo and make a variable that stores your API key.
 
-### `npm test`
+```
+$ REACT_APP_API_KEY= <your_API_KEY>
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To install the app, run the command: 
+```
+$ npm install
+$ npm run build
+```
+This will create a build folder in your local copy of the repo.
+Open a Google Chrome window and go to :
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+chrome://extensions/
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Toggle to Developer Mode and click on the load unpacked button, then select the ```/build``` folder that was just created.
 
-### `npm run eject`
+![chrome extenssions](https://i.imgur.com/jAvQmCP.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Now you will see the Live Transalte Extensions in your list of extensions, toggle it on to use it!
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Features:
+1) Light and Dark mode 
+2) Highlight text on current tab to translate 
+3) Type text in the text box to translate to given language.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<img src="https://i.imgur.com/LaTuS8X.png" width="300" height="300"> <img src="https://i.imgur.com/7dDq3TX.png" width="400" height="300">
+<img src="https://i.imgur.com/0mRYUq3.png" width="250" height="300">
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
