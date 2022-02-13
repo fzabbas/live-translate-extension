@@ -43,6 +43,6 @@ Features:
 2) Highlight text on current tab to translate 
 3) Type text in the text box to translate to given language.
 
-<img src="https://i.imgur.com/LaTuS8X.png" width="300" height="300"> <img src="https://i.imgur.com/7dDq3TX.png" width="400" height="300">
-<img src="https://i.imgur.com/0mRYUq3.png" width="250" height="300">
+<img src="https://i.imgur.com/LaTuS8X.png" width="300"> <img src="https://i.imgur.com/7dDq3TX.png" width="400">
+<img src="https://i.imgur.com/0mRYUq3.png" width="250" >
 
